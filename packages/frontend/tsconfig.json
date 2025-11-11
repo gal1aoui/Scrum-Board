@@ -13,14 +13,17 @@
     "strictFunctionTypes": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitThis": true,
+    "jsx": "react-jsx",
     "alwaysStrict": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
+      "@scrum-board/shared": ["../shared/src"],
+      "@scrum-board/shared/*": ["../shared/src/*"],
       "@/*": ["src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "vite-env.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

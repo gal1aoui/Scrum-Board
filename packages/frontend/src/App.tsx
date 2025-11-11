@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { LayoutProvider } from "./contexts/layout-context"
@@ -13,6 +11,7 @@ import RegisterPage from "./pages/register-page"
 import ProjectsPage from "./pages/projects-page"
 import SprintsPage from "./pages/sprints-page"
 import { useAuth } from "./hooks/use-auth"
+import React from "react"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -71,11 +70,19 @@ export default function App() {
             {/* Protected Routes */}
             {isAuthenticated && (
               <>
-                <Route element={<MainLayout />}>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/projects" element={<ProjectsPage />} />
-                  <Route path="/sprints" element={<SprintsPage />} />
-                </Route>
+                <Route
+                  element={
+                    <MainLayout>
+                      <React.Suspense fallback={<div>Loading...</div>}>
+                        <Routes>
+                          <Route path="/" element={<HomePage />} />
+                          <Route path="/projects" element={<ProjectsPage />} />
+                          <Route path="/sprints" element={<SprintsPage />} />
+                        </Routes>
+                      </React.Suspense>
+                    </MainLayout>
+                  }
+                />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </>
             )}

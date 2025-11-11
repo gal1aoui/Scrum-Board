@@ -19,6 +19,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
+      "@scrum-board/shared": ["../shared/src"],
+      "@scrum-board/shared/*": ["../shared/src/*"],
       "@/*": ["src/*"]
     }
   },

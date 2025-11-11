@@ -7,7 +7,7 @@ export const useSocket = (userId: string) => {
   const socketRef = useRef<Socket | null>(null)
 
   useEffect(() => {
-    socketRef.current = io(import.meta.env.VITE_WS_URL || "http://localhost:3000", {
+    socketRef.current = io("http://localhost:3000", {
       auth: {
         token: localStorage.getItem("token"),
       },
