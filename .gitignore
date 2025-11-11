@@ -4,6 +4,7 @@
 /packages/backend/node_modules
 /packages/frontend/node_modules
 /packages/shared/node_modules
+.next
 
 /build
 /tmp
