@@ -1,6 +1,6 @@
+import { ProjectRepository } from "@/modules/users/repositories/project.repository"
+import { TicketRepository } from "@/modules/users/repositories/ticket.repository"
 import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common"
-import type { TicketRepository } from "../repositories/ticket.repository"
-import type { ProjectRepository } from "../../projects/repositories/project.repository"
 import { type ITicketCreate, TicketStatus } from "@scrum-board/shared"
 import { Types } from "mongoose"
 
@@ -47,7 +47,7 @@ export class TicketService {
     return this.ticketRepository.findByProjectId(projectId, skip, limit)
   }
 
-  async getTicketsByStatus(projectId: string, status: string): Promise<any[]> {
+  async getTicketsByStatus(projectId: string, status: TicketStatus): Promise<any[]> {
     return this.ticketRepository.findByStatus(projectId, status)
   }
 

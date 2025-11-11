@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Put, Delete, UseGuards } from "@nestjs/common"
 import type { TicketService } from "./services/ticket.service"
 import { JwtGuard } from "../../common/guards/jwt.guard"
-import { ticketCreateSchema, ticketUpdateSchema } from "@scrum-board/shared"
+import { ITicketCreate, ticketCreateSchema, TicketStatus, TicketType, ticketUpdateSchema } from "@scrum-board/shared"
 
 @Controller("tickets")
 @UseGuards(JwtGuard)
@@ -10,12 +10,12 @@ export class TicketsController {
 
   @Post(":projectId")
   async create(projectId: string, body: unknown, userId: string) {
-    const validatedData = ticketCreateSchema.parse(body)
+    const validatedData = ticketCreateSchema.parse(body) as Omit<ITicketCreate, 'type'> & { type: TicketType }
     return this.ticketService.createTicket(projectId, validatedData, userId)
   }
 
   @Get("project/:projectId")
-  async getProjectTickets(projectId: string, skip = 0, limit = 20, status?: string) {
+  async getProjectTickets(projectId: string, skip = 0, limit = 20, status?: TicketStatus) {
     if (status) {
       const tickets = await this.ticketService.getTicketsByStatus(projectId, status)
       return {

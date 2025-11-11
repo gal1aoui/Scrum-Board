@@ -23,7 +23,6 @@ export class TicketRepository {
       .populate("assignee", "email firstName lastName")
       .populate("reporter", "email firstName lastName")
       .populate("sprint", "name")
-      .lean()
       .exec()
   }
 
@@ -34,7 +33,6 @@ export class TicketRepository {
         .skip(skip)
         .limit(limit)
         .populate("assignee", "email firstName lastName")
-        .lean()
         .exec(),
       this.ticketModel.countDocuments({ projectId: new Types.ObjectId(projectId) }),
     ])
@@ -46,7 +44,6 @@ export class TicketRepository {
     return this.ticketModel
       .find({ sprint: new Types.ObjectId(sprintId) })
       .populate("assignee", "email firstName lastName")
-      .lean()
       .exec()
   }
 
@@ -57,25 +54,22 @@ export class TicketRepository {
         status,
       })
       .populate("assignee", "email firstName lastName")
-      .lean()
       .exec()
   }
 
   async update(id: string, ticketData: Partial<Ticket>): Promise<Ticket | null> {
-    return this.ticketModel.findByIdAndUpdate(new Types.ObjectId(id), ticketData, { new: true }).lean().exec()
+    return this.ticketModel.findByIdAndUpdate(new Types.ObjectId(id), ticketData, { new: true }).exec()
   }
 
   async addComment(ticketId: string, comment: any): Promise<Ticket | null> {
     return this.ticketModel
       .findByIdAndUpdate(new Types.ObjectId(ticketId), { $push: { comments: comment } }, { new: true })
-      .lean()
       .exec()
   }
 
   async addActivity(ticketId: string, activity: any): Promise<Ticket | null> {
     return this.ticketModel
       .findByIdAndUpdate(new Types.ObjectId(ticketId), { $push: { activity: activity } }, { new: true })
-      .lean()
       .exec()
   }
 

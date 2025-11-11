@@ -22,7 +22,7 @@ export class ChatService {
       .skip(skip)
       .limit(limit)
       .populate("sender", "firstName lastName avatar")
-      .lean()
+      
       .exec()
   }
 
@@ -33,7 +33,7 @@ export class ChatService {
       .skip(skip)
       .limit(limit)
       .populate("sender", "firstName lastName avatar")
-      .lean()
+      
       .exec()
   }
 
@@ -48,7 +48,7 @@ export class ChatService {
       })
       .sort({ createdAt: 1 })
       .populate("sender", "firstName lastName avatar")
-      .lean()
+      
       .exec()
   }
 

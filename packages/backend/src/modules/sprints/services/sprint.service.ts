@@ -1,6 +1,6 @@
+import { SprintRepository } from "@/modules/users/repositories/sprint.repository"
+import { TicketRepository } from "@/modules/users/repositories/ticket.repository"
 import { Injectable, NotFoundException, BadRequestException } from "@nestjs/common"
-import type { SprintRepository } from "../repositories/sprint.repository"
-import type { TicketRepository } from "../../tickets/repositories/ticket.repository"
 import { type ISprintCreate, SprintStatus } from "@scrum-board/shared"
 import { Types } from "mongoose"
 

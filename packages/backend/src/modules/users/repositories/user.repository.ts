@@ -16,23 +16,23 @@ export class UserRepository {
   }
 
   async findById(id: string): Promise<User | null> {
-    return this.userModel.findById(new Types.ObjectId(id)).lean().exec()
+    return this.userModel.findById(new Types.ObjectId(id)).exec()
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.userModel.findOne({ email }).lean().exec()
+    return this.userModel.findOne({ email }).exec()
   }
 
   async findAll(skip = 0, limit = 10): Promise<[User[], number]> {
     const [users, total] = await Promise.all([
-      this.userModel.find().skip(skip).limit(limit).lean().exec(),
+      this.userModel.find().skip(skip).limit(limit).exec(),
       this.userModel.countDocuments(),
     ])
     return [users, total]
   }
 
   async update(id: string, userData: Partial<User>): Promise<User | null> {
-    return this.userModel.findByIdAndUpdate(new Types.ObjectId(id), userData, { new: true }).lean().exec()
+    return this.userModel.findByIdAndUpdate(new Types.ObjectId(id), userData, { new: true }).exec()
   }
 
   async delete(id: string): Promise<boolean> {
@@ -47,7 +47,7 @@ export class UserRepository {
         { $addToSet: { projectIds: new Types.ObjectId(projectId) } },
         { new: true },
       )
-      .lean()
+      
       .exec()
   }
 }

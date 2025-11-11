@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } fro
 import type { ProjectService } from "./services/project.service"
 import { JwtGuard } from "../../common/guards/jwt.guard"
 import { CurrentUser } from "../../common/decorators/current-user.decorator"
-import { projectCreateSchema } from "@scrum-board/shared"
+import { IProjectCreate, projectCreateSchema } from "@scrum-board/shared"
 
 @Controller("projects")
 @UseGuards(JwtGuard)
@@ -12,7 +12,12 @@ export class ProjectsController {
   @Post()
   async create(body: unknown, @CurrentUser('_id') userId: string) {
     const validatedData = projectCreateSchema.parse(body)
-    return this.projectService.createProject(validatedData, userId)
+    const payload: IProjectCreate = {
+    ...validatedData,
+    // ensure description is a string (use empty string as default)
+    description: validatedData.description ?? "",
+  }
+    return this.projectService.createProject(payload, userId)
   }
 
   @Get()
@@ -33,7 +38,7 @@ export class ProjectsController {
   }
 
   @Put(":id")
-  async update(@Param('id') projectId: string, body: unknown, @CurrentUser('_id') userId: string) {
+  async update(@Param('id') projectId: string, body: Partial<any>, @CurrentUser('_id') userId: string) {
     return this.projectService.updateProject(projectId, body, userId)
   }
 

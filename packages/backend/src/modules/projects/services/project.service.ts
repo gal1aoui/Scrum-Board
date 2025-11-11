@@ -1,6 +1,6 @@
+import { ProjectRepository } from "@/modules/users/repositories/project.repository"
 import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common"
-import type { ProjectRepository } from "../repositories/project.repository"
-import type { IProjectCreate } from "@scrum-board/shared"
+import { ProjectStatus, type IProjectCreate } from "@scrum-board/shared"
 import { Types } from "mongoose"
 
 @Injectable()
@@ -70,7 +70,7 @@ export class ProjectService {
     }
 
     await this.projectRepository.update(projectId, {
-      status: "ARCHIVED",
+      status: ProjectStatus.ARCHIVED,
     })
 
     return { success: true }

@@ -7,7 +7,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "composite": true,
+    "composite": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "strict": true,
@@ -17,9 +17,5 @@
       "@scrum-board/shared/*": ["packages/shared/src/*"]
     }
   },
-  "references": [
-    { "path": "packages/shared" },
-    { "path": "packages/backend" },
-    { "path": "packages/frontend" }
-  ]
+  "include": []
 }

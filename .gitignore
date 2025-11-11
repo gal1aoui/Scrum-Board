@@ -1,11 +1,9 @@
 # Nestjs specific
-/dist
+*/**/dist
 /node_modules
-/packages/backend/node_modules
-/packages/frontend/node_modules
-/packages/shared/node_modules
+*/**/node_modules
 .next
-
+*.tsbuildinfo
 /build
 /tmp
 

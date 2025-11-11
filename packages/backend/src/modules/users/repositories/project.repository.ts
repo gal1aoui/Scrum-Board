@@ -20,12 +20,12 @@ export class ProjectRepository {
       .findById(new Types.ObjectId(id))
       .populate("owner", "email firstName lastName")
       .populate("teamMembers.userId", "email firstName lastName")
-      .lean()
+      
       .exec()
   }
 
   async findByKey(key: string): Promise<Project | null> {
-    return this.projectModel.findOne({ key }).lean().exec()
+    return this.projectModel.findOne({ key }).exec()
   }
 
   async findByUserId(userId: string, skip = 0, limit = 10): Promise<[Project[], number]> {
@@ -34,7 +34,7 @@ export class ProjectRepository {
     }
 
     const [projects, total] = await Promise.all([
-      this.projectModel.find(query).skip(skip).limit(limit).populate("owner", "email firstName lastName").lean().exec(),
+      this.projectModel.find(query).skip(skip).limit(limit).populate("owner", "email firstName lastName").exec(),
       this.projectModel.countDocuments(query),
     ])
 
@@ -42,7 +42,7 @@ export class ProjectRepository {
   }
 
   async update(id: string, projectData: Partial<Project>): Promise<Project | null> {
-    return this.projectModel.findByIdAndUpdate(new Types.ObjectId(id), projectData, { new: true }).lean().exec()
+    return this.projectModel.findByIdAndUpdate(new Types.ObjectId(id), projectData, { new: true }).exec()
   }
 
   async addTeamMember(projectId: string, memberId: string, role: string): Promise<Project | null> {
@@ -60,7 +60,7 @@ export class ProjectRepository {
         },
         { new: true },
       )
-      .lean()
+      
       .exec()
   }
 
@@ -71,7 +71,7 @@ export class ProjectRepository {
         { $pull: { "teamMembers.userId": new Types.ObjectId(memberId) } },
         { new: true },
       )
-      .lean()
+      
       .exec()
   }
 }

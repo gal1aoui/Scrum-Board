@@ -16,7 +16,7 @@ export class SprintRepository {
       .findById(new Types.ObjectId(id))
       .populate("projectId", "name key")
       .populate("tickets")
-      .lean()
+      
       .exec()
   }
 
@@ -24,7 +24,7 @@ export class SprintRepository {
     return this.sprintModel
       .find({ projectId: new Types.ObjectId(projectId) })
       .sort({ startDate: -1 })
-      .lean()
+      
       .exec()
   }
 
@@ -34,12 +34,12 @@ export class SprintRepository {
         projectId: new Types.ObjectId(projectId),
         status: { $in: ["ACTIVE", "REVIEW"] },
       })
-      .lean()
+      
       .exec()
   }
 
   async update(id: string, sprintData: Partial<Sprint>): Promise<Sprint | null> {
-    return this.sprintModel.findByIdAndUpdate(new Types.ObjectId(id), sprintData, { new: true }).lean().exec()
+    return this.sprintModel.findByIdAndUpdate(new Types.ObjectId(id), sprintData, { new: true }).exec()
   }
 
   async addTicket(sprintId: string, ticketId: string): Promise<Sprint | null> {
@@ -49,7 +49,7 @@ export class SprintRepository {
         { $addToSet: { tickets: new Types.ObjectId(ticketId) } },
         { new: true },
       )
-      .lean()
+      
       .exec()
   }
 
@@ -60,7 +60,7 @@ export class SprintRepository {
         { $pull: { tickets: new Types.ObjectId(ticketId) } },
         { new: true },
       )
-      .lean()
+      
       .exec()
   }
 
